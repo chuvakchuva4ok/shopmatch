@@ -6,9 +6,9 @@
       "description": "Беспроводные наушники с шумоподавлением. Отличное звучание, до 30 часов работы.",
       "price": 25000,
       "photo": null,
-      "status": "available",
-      "reserved_by": null,
-      "reserved_at": null
+      "status": "reserved",
+      "reserved_by": 865291060,
+      "reserved_at": "2026-05-14T19:51:06.417307"
     },
     {
       "id": 2,
@@ -36,9 +36,9 @@
       "description": "Умные часы 45mm. GPS + Cellular. Ремешок в комплекте.",
       "price": 35000,
       "photo": null,
-      "status": "available",
-      "reserved_by": null,
-      "reserved_at": null
+      "status": "reserved",
+      "reserved_by": 614387190,
+      "reserved_at": "2026-05-14T19:49:32.366261"
     },
     {
       "id": 5,
