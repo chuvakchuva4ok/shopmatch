@@ -1,0 +1,154 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "title": "Наушники Sony WH-1000XM4",
+      "description": "Беспроводные наушники с шумоподавлением. Отличное звучание, до 30 часов работы.",
+      "price": 25000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 2,
+      "title": "iPhone 13 Pro 128GB",
+      "description": "Смартфон в отличном состоянии. Цвет: графит. Комплект: коробка, кабель.",
+      "price": 75000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 3,
+      "title": "MacBook Air M1",
+      "description": "Ноутбук Apple MacBook Air на чипе M1. 8GB RAM, 256GB SSD. Серебристый.",
+      "price": 85000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 4,
+      "title": "Apple Watch Series 7",
+      "description": "Умные часы 45mm. GPS + Cellular. Ремешок в комплекте.",
+      "price": 35000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 5,
+      "title": "iPad Air 5th Gen",
+      "description": "Планшет 64GB Wi-Fi. Цвет: голубой. Идеальное состояние.",
+      "price": 55000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 6,
+      "title": "Sony PlayStation 5",
+      "description": "Игровая консоль с дисководом. Два контроллера DualSense в комплекте.",
+      "price": 50000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 7,
+      "title": "Canon EOS R6",
+      "description": "Беззеркальная камера. Полный кадр. В комплекте объектив 24-105mm.",
+      "price": 180000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 8,
+      "title": "Dyson V15 Detect",
+      "description": "Беспроводной пылесос с лазерной подсветкой. Все насадки в комплекте.",
+      "price": 65000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 9,
+      "title": "Bose SoundLink Revolve+",
+      "description": "Портативная Bluetooth-колонка. 360° звук, до 16 часов работы.",
+      "price": 18000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 10,
+      "title": "GoPro Hero 11 Black",
+      "description": "Экшн-камера с 5K видео. Водонепроницаемая до 10м. Крепления в комплекте.",
+      "price": 42000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 11,
+      "title": "Kindle Paperwhite",
+      "description": "Электронная книга 8GB. Подсветка, защита от воды. Черный цвет.",
+      "price": 14000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 12,
+      "title": "Logitech MX Master 3S",
+      "description": "Беспроводная мышь для продуктивной работы. Тихие клики, эргономика.",
+      "price": 9000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 13,
+      "title": "Keychron K2 Mechanical",
+      "description": "Механическая клавиатура 75%. Hot-swap, RGB подсветка. Switches: Gateron Brown.",
+      "price": 12000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 14,
+      "title": "Samsung Odyssey G7",
+      "description": "Игровой монитор 27\" 240Hz 1ms. Изогнутый VA-экран, QHD разрешение.",
+      "price": 55000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    },
+    {
+      "id": 15,
+      "title": "AirPods Pro 2nd Gen",
+      "description": "Беспроводные наушники с активным шумоподавлением. Магсейф кейс.",
+      "price": 22000,
+      "photo": null,
+      "status": "available",
+      "reserved_by": null,
+      "reserved_at": null
+    }
+  ]
+}
