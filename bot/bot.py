@@ -3,7 +3,8 @@
 Собирает все хендлеры и запускает приложение.
 """
 import logging
-from telegram.ext import Application, MessageHandler, filters
+from telegram import Update
+from telegram.ext import Application, MessageHandler, filters, ContextTypes
 
 from config import TELEGRAM_BOT_TOKEN, ADMIN_ID
 from handlers.main_menu import get_handlers as get_main_menu_handlers, menu_button_handler, MAIN_MENU_KEYBOARD
@@ -109,6 +110,4 @@ def main():
 
 
 if __name__ == "__main__":
-    from telegram import Update
-    from telegram.ext import ContextTypes
     main()
