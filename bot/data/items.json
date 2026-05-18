@@ -8,7 +8,10 @@
       "photo": null,
       "status": "reserved",
       "reserved_by": 865291060,
-      "reserved_at": "2026-05-14T19:51:06.417307"
+      "reserved_at": "2026-05-14T19:51:06.417307",
+      "city": "Санкт-Петербург",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 2,
@@ -18,7 +21,11 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Казань",
+      "condition": "Новое",
+      "seller_username": "@username",
+      "photo_url": "data/photos/sample1.jpg"
     },
     {
       "id": 3,
@@ -28,7 +35,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Екатеринбург",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 4,
@@ -36,9 +46,12 @@
       "description": "Умные часы 45mm. GPS + Cellular. Ремешок в комплекте.",
       "price": 35000,
       "photo": null,
-      "status": "reserved",
+      "status": "available",
       "reserved_by": 614387190,
-      "reserved_at": "2026-05-14T19:49:32.366261"
+      "reserved_at": "2026-05-14T19:49:32.366261",
+      "city": "Новосибирск",
+      "condition": "Новое",
+      "seller_username": "@username"
     },
     {
       "id": 5,
@@ -46,9 +59,12 @@
       "description": "Планшет 64GB Wi-Fi. Цвет: голубой. Идеальное состояние.",
       "price": 55000,
       "photo": null,
-      "status": "available",
-      "reserved_by": null,
-      "reserved_at": null
+      "status": "reserved",
+      "reserved_by": 667471739,
+      "reserved_at": "2026-05-14T20:09:55.346270",
+      "city": "Нижний Новгород",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 6,
@@ -58,7 +74,11 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Самара",
+      "condition": "Новое",
+      "seller_username": "@username",
+      "photo_url": "data/photos/sample2.jpg"
     },
     {
       "id": 7,
@@ -68,7 +88,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Краснодар",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 8,
@@ -78,7 +101,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Воронеж",
+      "condition": "Новое",
+      "seller_username": "@username"
     },
     {
       "id": 9,
@@ -88,7 +114,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Челябинск",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 10,
@@ -98,7 +127,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Москва",
+      "condition": "Новое",
+      "seller_username": "@username"
     },
     {
       "id": 11,
@@ -108,7 +140,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Санкт-Петербург",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 12,
@@ -118,7 +153,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Казань",
+      "condition": "Новое",
+      "seller_username": "@username"
     },
     {
       "id": 13,
@@ -128,7 +166,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Екатеринбург",
+      "condition": "Б/У",
+      "seller_username": "@username"
     },
     {
       "id": 14,
@@ -138,7 +179,10 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Новосибирск",
+      "condition": "Новое",
+      "seller_username": "@username"
     },
     {
       "id": 15,
@@ -148,7 +192,49 @@
       "photo": null,
       "status": "available",
       "reserved_by": null,
-      "reserved_at": null
+      "reserved_at": null,
+      "city": "Нижний Новгород",
+      "condition": "Б/У",
+      "seller_username": "@username"
+    },
+    {
+      "id": 16,
+      "title": "Кайфарик + шибуршитель",
+      "description": "Норм пацан косяков за спиной не имеет зато вайб имеет",
+      "price": 100,
+      "city": "Чебаркуль",
+      "condition": "Б/У",
+      "photo_url": null,
+      "seller_id": 865291060,
+      "seller_username": "@bandit22281",
+      "created_at": "2026-05-15T19:46:24.398172",
+      "status": "available"
+    },
+    {
+      "id": 17,
+      "title": "вфы",
+      "description": "выф",
+      "price": 321,
+      "city": "вфы",
+      "condition": "Новое",
+      "photo_url": null,
+      "seller_id": 614387190,
+      "seller_username": "@username",
+      "created_at": "2026-05-17T16:28:00.357008",
+      "status": "available"
+    },
+    {
+      "id": 18,
+      "title": "шоколадка фистаблс",
+      "description": "мистр бист фистблс",
+      "price": 6500,
+      "city": "Сургут",
+      "condition": "Б/У",
+      "photo_url": null,
+      "seller_id": 865291060,
+      "seller_username": "@bandit22281",
+      "created_at": "2026-05-18T18:18:20.997375",
+      "status": "available"
     }
   ]
 }

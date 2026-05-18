@@ -1,5 +1,5 @@
 """
-Модуль для работы с данными (товары, FAQ, бронирования).
+Модуль для работы с данными (товары, FAQ и избранное).
 Все данные хранятся в JSON-файлах.
 """
 import json
@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, List
 
-from config import ITEMS_FILE, FAQ_FILE, BOOKINGS_FILE, DATA_DIR
+from config import ITEMS_FILE, FAQ_FILE, FAVORITES_FILE, DATA_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -52,160 +52,9 @@ def save_json(filepath: Path, data: Any) -> None:
 # ==================== ТОВАРЫ ====================
 
 def get_default_items() -> Dict[str, Any]:
-    """Возвращает структуру товаров по умолчанию с примерами."""
+    """Возвращает структуру товаров по умолчанию."""
     return {
-        "items": [
-            {
-                "id": 1,
-                "title": "Наушники Sony WH-1000XM4",
-                "description": "Беспроводные наушники с шумоподавлением. Отличное звучание, до 30 часов работы.",
-                "price": 25000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 2,
-                "title": "iPhone 13 Pro 128GB",
-                "description": "Смартфон в отличном состоянии. Цвет: графит. Комплект: коробка, кабель.",
-                "price": 75000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 3,
-                "title": "MacBook Air M1",
-                "description": "Ноутбук Apple MacBook Air на чипе M1. 8GB RAM, 256GB SSD. Серебристый.",
-                "price": 85000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 4,
-                "title": "Apple Watch Series 7",
-                "description": "Умные часы 45mm. GPS + Cellular. Ремешок в комплекте.",
-                "price": 35000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 5,
-                "title": "iPad Air 5th Gen",
-                "description": "Планшет 64GB Wi-Fi. Цвет: голубой. Идеальное состояние.",
-                "price": 55000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 6,
-                "title": "Sony PlayStation 5",
-                "description": "Игровая консоль с дисководом. Два контроллера DualSense в комплекте.",
-                "price": 50000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 7,
-                "title": "Canon EOS R6",
-                "description": "Беззеркальная камера. Полный кадр. В комплекте объектив 24-105mm.",
-                "price": 180000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 8,
-                "title": "Dyson V15 Detect",
-                "description": "Беспроводной пылесос с лазерной подсветкой. Все насадки в комплекте.",
-                "price": 65000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 9,
-                "title": "Bose SoundLink Revolve+",
-                "description": "Портативная Bluetooth-колонка. 360° звук, до 16 часов работы.",
-                "price": 18000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 10,
-                "title": "GoPro Hero 11 Black",
-                "description": "Экшн-камера с 5K видео. Водонепроницаемая до 10м. Крепления в комплекте.",
-                "price": 42000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 11,
-                "title": "Kindle Paperwhite",
-                "description": "Электронная книга 8GB. Подсветка, защита от воды. Черный цвет.",
-                "price": 14000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 12,
-                "title": "Logitech MX Master 3S",
-                "description": "Беспроводная мышь для продуктивной работы. Тихие клики, эргономика.",
-                "price": 9000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 13,
-                "title": "Keychron K2 Mechanical",
-                "description": "Механическая клавиатура 75%. Hot-swap, RGB подсветка. Switches: Gateron Brown.",
-                "price": 12000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 14,
-                "title": "Samsung Odyssey G7",
-                "description": "Игровой монитор 27\" 240Hz 1ms. Изогнутый VA-экран, QHD разрешение.",
-                "price": 55000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            },
-            {
-                "id": 15,
-                "title": "AirPods Pro 2nd Gen",
-                "description": "Беспроводные наушники с активным шумоподавлением. Магсейф кейс.",
-                "price": 22000,
-                "photo": None,
-                "status": "available",
-                "reserved_by": None,
-                "reserved_at": None
-            }
-        ]
+        "items": []
     }
 
 
@@ -229,7 +78,16 @@ def save_items(items: List[Dict[str, Any]]) -> None:
     save_json(ITEMS_FILE, {"items": items})
 
 
-def add_item(title: str, description: str, price: int, photo: Optional[str] = None) -> Dict[str, Any]:
+def add_item(
+    title: str,
+    description: str,
+    price: int,
+    city: str,
+    condition: str,
+    seller_id: int,
+    seller_username: str,
+    photo_url: Optional[str] = None
+) -> Dict[str, Any]:
     """Добавить новый товар."""
     items = get_items()
     # Генерируем новый ID
@@ -239,10 +97,13 @@ def add_item(title: str, description: str, price: int, photo: Optional[str] = No
         "title": title,
         "description": description,
         "price": price,
-        "photo": photo,
-        "status": "available",
-        "reserved_by": None,
-        "reserved_at": None
+        "city": city,
+        "condition": condition,
+        "photo_url": photo_url,
+        "seller_id": seller_id,
+        "seller_username": seller_username,
+        "created_at": datetime.now().isoformat(),
+        "status": "available"
     }
     items.append(new_item)
     save_items(items)
@@ -266,9 +127,24 @@ def search_items(query: str) -> List[Dict[str, Any]]:
     items = get_items()
     results = []
     for item in items:
-        if query_lower in item["title"].lower() or query_lower in item["description"].lower():
+        if item["status"] == "available" and (
+            query_lower in item["title"].lower() or 
+            query_lower in item["description"].lower()
+        ):
             results.append(item)
     return results
+
+
+def get_available_items() -> List[Dict[str, Any]]:
+    """Получить все доступные товары (не зарезервированные)."""
+    items = get_items()
+    return [item for item in items if item["status"] == "available"]
+
+
+def get_user_items(seller_id: int) -> List[Dict[str, Any]]:
+    """Получить все товары продавца."""
+    items = get_items()
+    return [item for item in items if item.get("seller_id") == seller_id]
 
 
 # ==================== FAQ ====================
@@ -279,27 +155,27 @@ def get_default_faq() -> Dict[str, Any]:
         "questions": [
             {
                 "id": "delivery",
-                "question": "🚚 Доставка",
-                "answer": "Доставка осуществляется по всей России через СДЭК, Почту России или курьером.\n\n📦 Стоимость доставки рассчитывается индивидуально.\n⏱ Срок доставки: 2-7 дней в зависимости от региона.\n\nВозможна самовывоз из Москвы (метро Октябрьская)."
+                "question": "Доставка",
+                "answer": "Доставка осуществляется по всей России через СДЭК, Почту России или курьером.\n\nСтоимость доставки рассчитывается индивидуально.\nСрок доставки: 2-7 дней в зависимости от региона.\n\nВозможна самовывоз."
             },
             {
                 "id": "payment",
-                "question": "💳 Оплата",
-                "answer": "Принимаются следующие способы оплаты:\n\n• Наличные при встрече\n• Перевод на карту (Сбербанк, Тинькофф)\n• Безналичный расчёт (для юрлиц)\n\nПредоплата 50% для бронирования товара."
+                "question": "Оплата",
+                "answer": "Принимаются следующие способы оплаты:\n\n• Наличные при встрече\n• Перевод на карту (Сбербанк, Тинькофф)\n• Безналичный расчёт (для юрлиц)"
             },
             {
                 "id": "return",
-                "question": "↩️ Возврат",
-                "answer": "Возврат товара возможен в течение 14 дней при сохранении товарного вида и упаковки.\n\n⚠️ Товары надлежащего качества, бывшие в употреблении, возврату не подлежат.\n\nПри обнаружении брака — полный возврат средств или обмен."
+                "question": "Возврат",
+                "answer": "Возврат товара возможен в течение 14 дней при сохранении товарного вида и упаковки.\n\nТовары надлежащего качества, бывшие в употреблении, возврату не подлежат.\n\nПри обнаружении брака — полный возврат средств или обмен."
             },
             {
                 "id": "contacts",
-                "question": "📞 Контакты",
-                "answer": "Связаться со мной можно:\n\n📱 Telegram: @SellerName\n📧 Email: seller@example.com\n🕒 Время связи: 9:00 - 21:00 (МСК)\n\nОтвечаю обычно в течение часа!"
+                "question": "Контакты",
+                "answer": "Связаться со мной можно через чат в боте или прямо при просмотре объявления."
             },
             {
                 "id": "warranty",
-                "question": "🛡 Гарантия",
+                "question": "Гарантия",
                 "answer": "На все товары предоставляется гарантия:\n\n• Техника Apple — 1 год\n• Электроника — 6 месяцев\n• Аксессуары — 14 дней\n\nГарантийный случай — бесплатный ремонт или замена."
             }
         ]
@@ -321,114 +197,81 @@ def get_faq_answer(faq_id: str) -> Optional[str]:
     return None
 
 
-# ==================== БРОНИРОВАНИЯ ====================
+# ==================== ИЗБРАННОЕ ====================
 
-def get_default_bookings() -> Dict[str, Any]:
-    """Возвращает структуру бронирований по умолчанию."""
-    return {"bookings": {}}
-
-
-def get_bookings() -> Dict[str, Any]:
-    """Получить все бронирования."""
-    return load_json(BOOKINGS_FILE, get_default_bookings())
+def get_default_favorites() -> Dict[str, Any]:
+    """Возвращает структуру избранного по умолчанию."""
+    return {"favorites": {}}
 
 
-def save_bookings(bookings: Dict[str, Any]) -> None:
-    """Сохранить бронирования."""
-    save_json(BOOKINGS_FILE, bookings)
+def get_favorites() -> Dict[str, Any]:
+    """Получить все избранные."""
+    return load_json(FAVORITES_FILE, get_default_favorites())
 
 
-def create_booking(user_id: int, item_id: int) -> Optional[int]:
-    """
-    Создать бронирование товара.
-    Возвращает номер брони или None если товар недоступен.
-    """
+def save_favorites(favorites: Dict[str, Any]) -> None:
+    """Сохранить избранные."""
+    save_json(FAVORITES_FILE, favorites)
+
+
+def add_to_favorites(user_id: int, item_id: int) -> bool:
+    """Добавить товар в избранное."""
     item = get_item_by_id(item_id)
-    if not item or item["status"] != "available":
-        return None
-
-    bookings_data = get_bookings()
-    # Генерируем уникальный номер брони
-    booking_number = max((int(b) for b in bookings_data.get("bookings", {}).keys()), default=0) + 1
-    
-    booking_info = {
-        "user_id": user_id,
-        "item_id": item_id,
-        "created_at": datetime.now().isoformat(),
-        "status": "active"
-    }
-    
-    bookings_data["bookings"][str(booking_number)] = booking_info
-    save_bookings(bookings_data)
-
-    # Обновляем статус товара
-    items = get_items()
-    for i, it in enumerate(items):
-        if it["id"] == item_id:
-            items[i]["status"] = "reserved"
-            items[i]["reserved_by"] = user_id
-            items[i]["reserved_at"] = datetime.now().isoformat()
-            break
-    save_items(items)
-
-    return booking_number
-
-
-def cancel_booking(booking_number: int, user_id: int) -> bool:
-    """
-    Отменить бронирование.
-    Проверяет, что пользователь является владельцем брони.
-    """
-    bookings_data = get_bookings()
-    bookings = bookings_data.get("bookings", {})
-    
-    if str(booking_number) not in bookings:
+    if not item:
         return False
     
-    booking = bookings[str(booking_number)]
-    if booking["user_id"] != user_id or booking["status"] != "active":
+    favorites_data = get_favorites()
+    user_key = str(user_id)
+    
+    if user_key not in favorites_data["favorites"]:
+        favorites_data["favorites"][user_key] = []
+    
+    if item_id not in favorites_data["favorites"][user_key]:
+        favorites_data["favorites"][user_key].append(item_id)
+        save_favorites(favorites_data)
+        return True
+    
+    return False
+
+
+def remove_from_favorites(user_id: int, item_id: int) -> bool:
+    """Удалить товар из избранного."""
+    favorites_data = get_favorites()
+    user_key = str(user_id)
+    
+    if user_key in favorites_data["favorites"] and item_id in favorites_data["favorites"][user_key]:
+        favorites_data["favorites"][user_key].remove(item_id)
+        save_favorites(favorites_data)
+        return True
+    
+    return False
+
+
+def get_user_favorites(user_id: int) -> List[Dict[str, Any]]:
+    """Получить избранные товары пользователя."""
+    favorites_data = get_favorites()
+    user_key = str(user_id)
+    
+    if user_key not in favorites_data["favorites"]:
+        return []
+    
+    items = get_items()
+    favorite_items = []
+    for item_id in favorites_data["favorites"][user_key]:
+        item = next((it for it in items if it["id"] == item_id), None)
+        if item:
+            favorite_items.append(item)
+    
+    return favorite_items
+
+
+def is_favorite(user_id: int, item_id: int) -> bool:
+    """Проверить, находится ли товар в избранном."""
+    favorites_data = get_favorites()
+    user_key = str(user_id)
+    
+    if user_key not in favorites_data["favorites"]:
         return False
-
-    # Отменяем бронь
-    booking["status"] = "cancelled"
-    save_bookings(bookings_data)
-
-    # Освобождаем товар
-    items = get_items()
-    for i, item in enumerate(items):
-        if item["id"] == booking["item_id"]:
-            items[i]["status"] = "available"
-            items[i]["reserved_by"] = None
-            items[i]["reserved_at"] = None
-            break
-    save_items(items)
-
-    return True
-
-
-def get_user_bookings(user_id: int) -> List[Dict[str, Any]]:
-    """Получить все активные бронирования пользователя."""
-    bookings_data = get_bookings()
-    bookings = bookings_data.get("bookings", {})
-    items = get_items()
     
-    user_bookings = []
-    for booking_num, booking in bookings.items():
-        if booking["user_id"] == user_id and booking["status"] == "active":
-            item = next((it for it in items if it["id"] == booking["item_id"]), None)
-            user_bookings.append({
-                "booking_number": int(booking_num),
-                "booking": booking,
-                "item": item
-            })
-    
-    return user_bookings
+    return item_id in favorites_data["favorites"][user_key]
 
-
-def get_booking_item_id(booking_number: int) -> Optional[int]:
-    """Получить ID товара по номеру брони."""
-    bookings_data = get_bookings()
-    booking = bookings_data.get("bookings", {}).get(str(booking_number))
-    if booking:
-        return booking["item_id"]
-    return None

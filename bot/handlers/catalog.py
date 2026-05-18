@@ -19,9 +19,8 @@ async def show_catalog(update: Update, context: ContextTypes.DEFAULT_TYPE, page:
     
     if not items:
         await update.message.reply_text(
-            "😔 Каталог пока пуст. Попробуйте позже!"
+            "Каталог пока пуст. Попробуйте позже."
         )
-        return
     
     # Получаем товары для текущей страницы
     start_idx = page * ITEMS_PER_PAGE
@@ -29,35 +28,34 @@ async def show_catalog(update: Update, context: ContextTypes.DEFAULT_TYPE, page:
     page_items = items[start_idx:end_idx]
     
     # Формируем список товаров
-    items_text = "🛍 <b>Каталог товаров</b>\n\n"
+    items_text = "<b>Каталог товаров</b>\n\n"
     for item in page_items:
-        status_emoji = "✅" if item["status"] == "available" else "🔒"
         price_formatted = f"{item['price']:,}".replace(",", " ")
-        items_text += f"{status_emoji} <b>{item['title']}</b>\n"
-        items_text += f"   💰 {price_formatted} ₽\n\n"
+        status_text = "Доступен" if item["status"] == "available" else "Недоступен"
+        items_text += f"<b>{item['title']}</b> — {status_text}\n"
+        items_text += f"   Цена: {price_formatted} ₽\n\n"
     
-    items_text += f"📄 Страница {page + 1} из {total_pages}"
+    items_text += f"Страница {page + 1} из {total_pages}"
     
     # Создаём инлайн-клавиатуру с товарами и навигацией
     keyboard = []
     
     # Кнопки с товарами
     for item in page_items:
-        button_text = f"{'✅' if item['status'] == 'available' else '🔒'} {item['title']}"
-        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"view_item_{item['id']}")])
+        keyboard.append([InlineKeyboardButton(item['title'], callback_data=f"view_item_{item['id']}")])
     
     # Кнопки навигации
     nav_buttons = []
     if page > 0:
-        nav_buttons.append(InlineKeyboardButton("← Назад", callback_data=f"catalog_page_{page - 1}"))
+        nav_buttons.append(InlineKeyboardButton("Назад", callback_data=f"catalog_page_{page - 1}"))
     if page < total_pages - 1:
-        nav_buttons.append(InlineKeyboardButton("Вперёд →", callback_data=f"catalog_page_{page + 1}"))
+        nav_buttons.append(InlineKeyboardButton("Вперёд", callback_data=f"catalog_page_{page + 1}"))
     
     if nav_buttons:
         keyboard.append(nav_buttons)
     
     # Кнопка возврата в главное меню
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard.append([InlineKeyboardButton("Главное меню", callback_data="main_menu")])
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -92,37 +90,36 @@ async def show_catalog_from_callback(query, context: ContextTypes.DEFAULT_TYPE, 
     total_pages = (len(items) + ITEMS_PER_PAGE - 1) // ITEMS_PER_PAGE
     
     if not items:
-        await query.edit_message_text("😔 Каталог пока пуст. Попробуйте позже!")
+        await query.edit_message_text("Каталог пока пуст. Попробуйте позже.")
         return
     
     start_idx = page * ITEMS_PER_PAGE
     end_idx = min(start_idx + ITEMS_PER_PAGE, len(items))
     page_items = items[start_idx:end_idx]
     
-    items_text = "🛍 <b>Каталог товаров</b>\n\n"
+    items_text = "<b>Каталог товаров</b>\n\n"
     for item in page_items:
-        status_emoji = "✅" if item["status"] == "available" else "🔒"
         price_formatted = f"{item['price']:,}".replace(",", " ")
-        items_text += f"{status_emoji} <b>{item['title']}</b>\n"
-        items_text += f"   💰 {price_formatted} ₽\n\n"
+        status_text = "Доступен" if item["status"] == "available" else "Недоступен"
+        items_text += f"<b>{item['title']}</b> — {status_text}\n"
+        items_text += f"   Цена: {price_formatted} ₽\n\n"
     
-    items_text += f"📄 Страница {page + 1} из {total_pages}"
+    items_text += f"Страница {page + 1} из {total_pages}"
     
     keyboard = []
     for item in page_items:
-        button_text = f"{'✅' if item['status'] == 'available' else '🔒'} {item['title']}"
-        keyboard.append([InlineKeyboardButton(button_text, callback_data=f"view_item_{item['id']}")])
+        keyboard.append([InlineKeyboardButton(item['title'], callback_data=f"view_item_{item['id']}")])
     
     nav_buttons = []
     if page > 0:
-        nav_buttons.append(InlineKeyboardButton("← Назад", callback_data=f"catalog_page_{page - 1}"))
+        nav_buttons.append(InlineKeyboardButton("Назад", callback_data=f"catalog_page_{page - 1}"))
     if page < total_pages - 1:
-        nav_buttons.append(InlineKeyboardButton("Вперёд →", callback_data=f"catalog_page_{page + 1}"))
+        nav_buttons.append(InlineKeyboardButton("Вперёд", callback_data=f"catalog_page_{page + 1}"))
     
     if nav_buttons:
         keyboard.append(nav_buttons)
     
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard.append([InlineKeyboardButton("Главное меню", callback_data="main_menu")])
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -150,35 +147,24 @@ async def show_item_card(update: Update | CallbackQueryHandler, context: Context
     item = get_item_by_id(item_id)
     if not item:
         if edit_mode:
-            await query.edit_message_text("❌ Товар не найден.")
+            await query.edit_message_text("Товар не найден.")
         else:
-            await update.message.reply_text("❌ Товар не найден.")
+            await update.message.reply_text("Товар не найден.")
         return
     
     # Формируем текст карточки
-    status_text = "✅ Доступен" if item["status"] == "available" else "🔒 Забронирован"
+    status_text = "Доступен" if item["status"] == "available" else "Недоступен"
     price_formatted = f"{item['price']:,}".replace(",", " ")
     
     card_text = f"<b>{item['title']}</b>\n\n"
-    card_text += f"💰 <b>Цена:</b> {price_formatted} ₽\n"
-    card_text += f"📊 <b>Статус:</b> {status_text}\n\n"
-    card_text += f"📝 <b>Описание:</b>\n{item['description']}"
+    card_text += f"Цена: {price_formatted} ₽\n"
+    card_text += f"Статус: {status_text}\n\n"
+    card_text += f"Описание:\n{item['description']}"
     
-    # Добавляем информацию о бронировании если товар забронирован этим пользователем
-    if item["status"] == "reserved" and item.get("reserved_by") == user_id:
-        card_text += "\n\n🔒 <b>Забронировано вами!</b>"
-    
-    # Создаём кнопки
-    keyboard = []
-    
-    if item["status"] == "available":
-        keyboard.append([InlineKeyboardButton("🔒 Забронировать", callback_data=f"reserve_{item_id}")])
-    elif item.get("reserved_by") == user_id:
-        # Товар забронирован этим пользователем
-        keyboard.append([InlineKeyboardButton("❌ Отменить бронь", callback_data=f"cancel_reserve_{item_id}")])
-    
-    keyboard.append([InlineKeyboardButton("← Назад к каталогу", callback_data="back_to_catalog")])
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard = [
+        [InlineKeyboardButton("Назад к каталогу", callback_data="back_to_catalog")],
+        [InlineKeyboardButton("Главное меню", callback_data="main_menu")]
+    ]
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     

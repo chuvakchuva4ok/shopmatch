@@ -9,8 +9,8 @@ from telegram.ext import (
     MessageHandler, filters, CallbackQueryHandler
 )
 
-from config import ADMIN_ID
-from data.data import get_items, add_item, delete_item, save_items, ITEMS_FILE
+from config import ADMIN_IDS
+from data.data import get_items, add_item, delete_item
 import json
 
 logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ ADD_TITLE, ADD_DESCRIPTION, ADD_PRICE, ADD_PHOTO = range(4)
 
 def is_admin(user_id: int) -> bool:
     """Проверить, является ли пользователь админом."""
-    return user_id == ADMIN_ID
+    return user_id in ADMIN_IDS
 
 
 async def admin_check(func):
@@ -128,7 +128,16 @@ async def add_photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     description = context.user_data.get('add_description', '')
     price = context.user_data.get('add_price', 0)
     
-    new_item = add_item(title, description, price, photo_file_id)
+    new_item = add_item(
+        title=title,
+        description=description,
+        price=price,
+        city="Не указан",
+        condition="Не указан",
+        seller_id=update.effective_user.id,
+        seller_username=f"@{update.effective_user.username}" if update.effective_user.username else "@username",
+        photo_url=photo_file_id
+    )
     
     await update.message.reply_text(
         f"✅ <b>Товар добавлен!</b>\n\n"
@@ -136,6 +145,8 @@ async def add_photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"<b>Название:</b> {title}\n"
         f"<b>Описание:</b> {description}\n"
         f"<b>Цена:</b> {price} ₽\n"
+        f"<b>Город:</b> {new_item['city']}\n"
+        f"<b>Состояние:</b> {new_item['condition']}\n"
         f"<b>Фото:</b> {'✅' if photo_file_id else '❌'}",
         parse_mode="HTML"
     )
@@ -216,7 +227,8 @@ def get_handlers():
             ]
         },
         fallbacks=[CommandHandler("cancel", cancel_conversation)],
-        allow_reentry=False
+        allow_reentry=False,
+        per_message=True
     )
     
     return [

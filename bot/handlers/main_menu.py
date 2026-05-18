@@ -3,7 +3,7 @@
 Стартовое сообщение и основные кнопки навигации.
 """
 import logging
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CommandHandler, CallbackQueryHandler
 
 logger = logging.getLogger(__name__)
@@ -12,8 +12,9 @@ logger = logging.getLogger(__name__)
 # Основное меню с кнопками
 MAIN_MENU_KEYBOARD = ReplyKeyboardMarkup(
     [
-        [KeyboardButton("🛍 Каталог"), KeyboardButton("🔍 Поиск")],
-        [KeyboardButton("❓ FAQ"), KeyboardButton("📋 Мои бронирования")]
+        [KeyboardButton("🛍 Покупать"), KeyboardButton("➕ Продать")],
+        [KeyboardButton("⭐ Избранное"), KeyboardButton("❓ FAQ")],
+        [KeyboardButton("📌 Мои объявления")]
     ],
     resize_keyboard=True,
     one_time_keyboard=False
@@ -25,14 +26,14 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     
     welcome_text = (
-        f"👋 Привет, {user.first_name}!\n\n"
-        f"Добро пожаловать в магазин электроники! 🎉\n\n"
+        f"Привет, {user.first_name}!\n\n"
+        f"Добро пожаловать в ShopMatch — простую площадку для покупки и продажи вещей.\n\n"
         f"Здесь вы можете:\n"
-        f"• 🛍 Просмотреть каталог товаров\n"
-        f"• 🔍 Найти нужный товар\n"
-        f"• ❓ Узнать ответы на частые вопросы\n"
-        f"• 📋 Забронировать товар\n\n"
-        f"Выберите действие в меню ниже 👇"
+        f"• Просмотреть объявления\n"
+        f"• Выставить свой товар на продажу\n"
+        f"• Управлять своими объявлениями\n"
+        f"• Сохранить интересные объявления\n\n"
+        f"Начните с просмотра каталога или создайте объявление."
     )
     
     await update.message.reply_text(
@@ -45,18 +46,21 @@ async def menu_button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     """Обработчик кнопок главного меню."""
     text = update.message.text
     
-    if text == "🛍 Каталог":
-        from handlers.catalog import show_catalog
-        await show_catalog(update, context, page=0)
-    elif text == "🔍 Поиск":
-        from handlers.search import start_search
-        await start_search(update, context)
-    elif text == "❓ FAQ":
+    if text == "🛍 Покупать" or text == "Покупать":
+        from handlers.browse import start_browsing
+        await start_browsing(update, context)
+    elif text == "⭐ Избранное" or text == "Избранное":
+        from handlers.favorites import show_favorites
+        await show_favorites(update, context)
+    elif text == "➕ Продать" or text == "Продать":
+        from handlers.sell import sell_start
+        await sell_start(update, context)
+    elif text == "📌 Мои объявления" or text == "Мои объявления":
+        from handlers.my_items import show_my_items
+        await show_my_items(update, context)
+    elif text == "❓ FAQ" or text == "FAQ":
         from handlers.faq import show_faq
         await show_faq(update, context)
-    elif text == "📋 Мои бронирования":
-        from handlers.booking import my_bookings
-        await my_bookings(update, context)
 
 
 async def show_main_menu(update: Update | CallbackQueryHandler, context: ContextTypes.DEFAULT_TYPE):
@@ -70,17 +74,17 @@ async def show_main_menu(update: Update | CallbackQueryHandler, context: Context
         user = query.from_user
         
         menu_text = (
-            f"👋 Привет, {user.first_name}!\n\n"
+            f"Привет, {user.first_name}!\n\n"
             f"<b>Главное меню</b>\n\n"
             f"Выберите действие:"
         )
         
         # Создаём инлайн-клавиатуру для главного меню
         keyboard = [
-            [InlineKeyboardButton("🛍 Каталог", callback_data="show_catalog")],
+            [InlineKeyboardButton("🛒 Каталог", callback_data="show_catalog")],
             [InlineKeyboardButton("🔍 Поиск", callback_data="show_search")],
-            [InlineKeyboardButton("❓ FAQ", callback_data="show_faq")],
-            [InlineKeyboardButton("📋 Мои бронирования", callback_data="my_bookings")]
+            [InlineKeyboardButton("📌 Мои объявления", callback_data="show_my_items")],
+            [InlineKeyboardButton("❓ FAQ", callback_data="show_faq")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         
@@ -106,16 +110,17 @@ async def main_menu_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
         await show_catalog_from_callback(query, context, page=0)
     elif data == "show_search":
         await query.edit_message_text(
-            "🔍 <b>Поиск товаров</b>\n\n"
+            "<b>Поиск товаров</b>\n\n"
             "Для поиска используйте команду /search в чате.",
             parse_mode="HTML"
         )
+    elif data == "show_my_items":
+        from handlers.my_items import show_my_items
+        await show_my_items(update, context)
     elif data == "show_faq":
         from handlers.faq import show_faq_from_callback
         await show_faq_from_callback(query, context)
-    elif data == "my_bookings":
-        from handlers.booking import my_bookings_callback
-        await my_bookings_callback(query, context)
+    # В текущем варианте бронирования отключены
 
 
 def get_handlers():
@@ -127,5 +132,6 @@ def get_handlers():
         CallbackQueryHandler(main_menu_callback, pattern=r"^main_menu$"),
         CallbackQueryHandler(main_menu_callback, pattern=r"^show_catalog$"),
         CallbackQueryHandler(main_menu_callback, pattern=r"^show_search$"),
+        CallbackQueryHandler(main_menu_callback, pattern=r"^show_my_items$"),
         CallbackQueryHandler(main_menu_callback, pattern=r"^show_faq$"),
     ]

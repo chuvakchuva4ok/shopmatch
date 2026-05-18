@@ -15,16 +15,16 @@ async def show_faq(update: Update, context: ContextTypes.DEFAULT_TYPE):
     faq_list = get_faq()
     
     if not faq_list:
-        await update.message.reply_text("❓ Раздел FAQ временно недоступен.")
+        await update.message.reply_text("Раздел FAQ временно недоступен.")
         return
     
-    text = "❓ <b>Часто задаваемые вопросы</b>\n\nВыберите вопрос, чтобы получить ответ:"
+    text = "<b>Часто задаваемые вопросы</b>\n\nВыберите вопрос, чтобы получить ответ:"
     
     keyboard = []
     for faq in faq_list:
         keyboard.append([InlineKeyboardButton(faq["question"], callback_data=f"faq_{faq['id']}")])
     
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard.append([InlineKeyboardButton("Главное меню", callback_data="browse_from_faq")])
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -55,8 +55,8 @@ async def faq_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             # Создаём клавиатуру с кнопкой назад
             keyboard = [
-                [InlineKeyboardButton("← Назад к FAQ", callback_data="back_to_faq")],
-                [InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")]
+                [InlineKeyboardButton("Назад к FAQ", callback_data="back_to_faq")],
+                [InlineKeyboardButton("Главное меню", callback_data="browse_from_faq")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
@@ -66,14 +66,14 @@ async def faq_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 parse_mode="HTML"
             )
         else:
-            await query.edit_message_text("❌ Ответ не найден.")
+            await query.edit_message_text("Ответ не найден.")
     
     elif data == "back_to_faq":
         await show_faq_from_callback(query, context)
     
-    elif data == "main_menu":
-        from handlers.main_menu import show_main_menu
-        await show_main_menu(query, context)
+    elif data == "browse_from_faq":
+        from handlers.browse import start_browsing
+        await start_browsing(update, context)
 
 
 async def show_faq_from_callback(query, context: ContextTypes.DEFAULT_TYPE):
@@ -81,16 +81,16 @@ async def show_faq_from_callback(query, context: ContextTypes.DEFAULT_TYPE):
     faq_list = get_faq()
     
     if not faq_list:
-        await query.edit_message_text("❓ Раздел FAQ временно недоступен.")
+        await query.edit_message_text("Раздел FAQ временно недоступен.")
         return
     
-    text = "❓ <b>Часто задаваемые вопросы</b>\n\nВыберите вопрос, чтобы получить ответ:"
+    text = "<b>Часто задаваемые вопросы</b>\n\nВыберите вопрос, чтобы получить ответ:"
     
     keyboard = []
     for faq in faq_list:
         keyboard.append([InlineKeyboardButton(faq["question"], callback_data=f"faq_{faq['id']}")])
     
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard.append([InlineKeyboardButton("Главное меню", callback_data="browse_from_faq")])
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -106,4 +106,5 @@ def get_handlers():
     return [
         CallbackQueryHandler(faq_callback, pattern=r"^faq_\w+"),
         CallbackQueryHandler(faq_callback, pattern=r"^back_to_faq$"),
+        CallbackQueryHandler(faq_callback, pattern=r"^browse_from_faq$"),
     ]

@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 async def start_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Начать поиск товара."""
     await update.message.reply_text(
-        "🔍 <b>Поиск товаров</b>\n\n"
+        "<b>Поиск товаров</b>\n\n"
         "Введите ключевое слово для поиска (например: наушники, iPhone, часы):\n\n"
         "Ищем по названию и описанию товаров.",
         parse_mode="HTML"
@@ -27,7 +27,7 @@ async def process_search_query(update: Update, context: ContextTypes.DEFAULT_TYP
     
     if len(query_text) < 2:
         await update.message.reply_text(
-            "❌ Слишком короткий запрос. Введите хотя бы 2 символа."
+            "Слишком короткий запрос. Введите хотя бы 2 символа."
         )
         return "WAITING_FOR_SEARCH_QUERY"
     
@@ -35,27 +35,26 @@ async def process_search_query(update: Update, context: ContextTypes.DEFAULT_TYP
     
     if not results:
         await update.message.reply_text(
-            f"😔 По запросу \"{query_text}\" ничего не найдено.\n\n"
-            "Попробуйте другой поисковый запрос или воспользуйтесь каталогом."
+            f"По запросу \"{query_text}\" ничего не найдено.\n\n"
+            "Попробуйте другой запрос или воспользуйтесь каталогом."
         )
         return "WAITING_FOR_SEARCH_QUERY"
     
     # Формируем результаты поиска
-    text = f"🔍 <b>Результаты поиска по запросу \"{query_text}\"</b>\n\n"
+    text = f"<b>Результаты поиска по запросу \"{query_text}\"</b>\n\n"
     text += f"Найдено товаров: {len(results)}\n\n"
     
     keyboard = []
     for item in results[:10]:  # Ограничиваем 10 результатами
-        status_emoji = "✅" if item["status"] == "available" else "🔒"
         price_formatted = f"{item['price']:,}".replace(",", " ")
-        text += f"{status_emoji} <b>{item['title']}</b> — {price_formatted} ₽\n"
+        text += f"<b>{item['title']}</b> — {price_formatted} ₽\n"
         keyboard.append([InlineKeyboardButton(
-            f"👁 {item['title']}",
+            item['title'],
             callback_data=f"view_item_{item['id']}"
         )])
     
-    keyboard.append([InlineKeyboardButton("🛍 Весь каталог", callback_data="back_to_catalog")])
-    keyboard.append([InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu")])
+    keyboard.append([InlineKeyboardButton("Весь каталог", callback_data="back_to_catalog")])
+    keyboard.append([InlineKeyboardButton("Главное меню", callback_data="main_menu")])
     
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -99,7 +98,8 @@ def get_handlers():
             ]
         },
         fallbacks=[],
-        allow_reentry=True
+        allow_reentry=True,
+        per_message=True
     )
     
     return [
